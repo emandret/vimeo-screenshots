@@ -1,0 +1,23 @@
+{
+  "name": "vimeo-screenshots",
+  "version": "1.0.0",
+  "description": "A tool to automatically screenshot videos on Vimeo",
+  "main": "browser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emandret/vimeo-screenshots.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emandret/vimeo-screenshots/issues"
+  },
+  "homepage": "https://github.com/emandret/vimeo-screenshots#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.1",
+    "puppeteer-core": "^5.2.1"
+  }
+}
