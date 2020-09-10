@@ -51,7 +51,7 @@ async function fetchVideoData(id) {
         // Time counters
         let start = 0, time = 0;
 
-        for (let t = 0; t < video.duration; t += interval) {
+        for (let t = 0; t < video.duration; t += Math.max(0, interval - time)) {
             const page = await browser.newPage();
 
             // Set the viewport width and height
@@ -60,7 +60,7 @@ async function fetchVideoData(id) {
             // Start time counter
             start = process.hrtime();
 
-            // Screenshot the viewport (might take a while)
+            // Open the player and screenshot the viewport
             await page.goto(`file://${cwd}/player.html#v=${id}&t=${Math.round(t)}`, { waitUntil: 'networkidle0', timeout: 0 });
             await page.screenshot({ path: `${imgPath}/x.jpeg`, type: 'jpeg', quality: 100, clip: { x: 0, y: 0, width: video.width, height: video.height } });
 
