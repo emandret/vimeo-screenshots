@@ -68,7 +68,7 @@ async function fetchVideoData(id) {
             t += (diff[0] + diff[1] * 1e-9);
 
             // Convert the number of seconds to hh:mm:ss
-            const date = new Date(Math.ceil(t) * 1e3).toISOString().substr(11, 8).replace(/\:/g, '');
+            const date = new Date(Math.round(t) * 1e3).toISOString().substr(11, 8).replace(/\:/g, '');
 
             // Rename the screenshot
             fs.rename(`${imgPath}/x.jpeg`, `${imgPath}/img_${date}.jpeg`, (e) => {
