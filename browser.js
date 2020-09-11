@@ -55,7 +55,7 @@ async function fetchVideoData(id) {
             await page.setViewport({ width: video.width, height: video.height });
 
             // Open the player
-            await page.goto(`file://${cwd}/player.html#v=${id}&t=${Math.floor(t)}`, { waitUntil: 'networkidle0', timeout: 0 });
+            await page.goto(`file://${cwd}/player.html#v=${id}&t=${Math.round(t)}`, { waitUntil: 'networkidle0', timeout: 0 });
 
             // Start time counter
             const start = process.hrtime();
@@ -70,7 +70,7 @@ async function fetchVideoData(id) {
             console.log(`t: ${t}`);
 
             // Convert the number of seconds to hh:mm:ss
-            const date = new Date(Math.floor(t) * 1e3).toISOString().substr(11, 8).replace(/\:/g, '');
+            const date = new Date(Math.ceil(t) * 1e3).toISOString().substr(11, 8).replace(/\:/g, '');
 
             // Rename the screenshot
             fs.rename(`${imgPath}/x.jpeg`, `${imgPath}/img_${date}.jpeg`, (e) => {
