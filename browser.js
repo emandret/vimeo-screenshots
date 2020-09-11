@@ -48,33 +48,29 @@ async function fetchVideoData(id) {
             fs.mkdirSync(imgPath);
         }
 
-        // Time counters
-        let start = 0, time = 0;
-
-        for (let t = 0; t < video.duration; t += Math.max(0, interval - time)) {
+        for (let t = 0; t < video.duration; t += interval) {
             const page = await browser.newPage();
 
             // Set the viewport width and height
             await page.setViewport({ width: video.width, height: video.height });
 
-            // Start time counter
-            start = process.hrtime();
+            // Open the player
+            await page.goto(`file://${cwd}/player.html#v=${id}&t=${Math.floor(t)}`, { waitUntil: 'networkidle0', timeout: 0 });
 
-            // Open the player and screenshot the viewport
-            await page.goto(`file://${cwd}/player.html#v=${id}&t=${Math.round(t)}`, { waitUntil: 'networkidle0', timeout: 0 });
+            // Start time counter
+            const start = process.hrtime();
+
+            // Screenshot the viewport
             await page.screenshot({ path: `${imgPath}/x.jpeg`, type: 'jpeg', quality: 100, clip: { x: 0, y: 0, width: video.width, height: video.height } });
 
             // Compute delta time
             const diff = process.hrtime(start);
-            time = diff[0] + diff[1] * 1e-9;
+            t += (diff[0] + diff[1] * 1e-9);
 
-            // Offset time error
-            t += Math.max(0, time - interval);
-
-            //console.log(`time: ${t}`);
+            console.log(`t: ${t}`);
 
             // Convert the number of seconds to hh:mm:ss
-            const date = new Date(Math.round(t) * 1e3).toISOString().substr(11, 8).replace(/\:/g, '');
+            const date = new Date(Math.floor(t) * 1e3).toISOString().substr(11, 8).replace(/\:/g, '');
 
             // Rename the screenshot
             fs.rename(`${imgPath}/x.jpeg`, `${imgPath}/img_${date}.jpeg`, (e) => {
@@ -82,6 +78,7 @@ async function fetchVideoData(id) {
                     console.warn(e);
                 } else {
                     console.log(`Saved img_${date}.png!`);
+                    console.log('======================');
                 }
             });
 
