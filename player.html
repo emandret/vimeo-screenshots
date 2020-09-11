@@ -2,32 +2,22 @@
 <html>
 <head>
     <style>
-        html,
-        body,
-        #player {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        #player {
-            position: fixed;
-            overflow: hidden;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            border: 0;
-        }
+        #player, body, html { margin:0; padding:0; width:100%; height:100% }
+        #top { padding-bottom:56.25%; height:0; overflow:hidden; position:relative }
+        #wrapper { position:relative; padding-bottom:200%; transform:translateY(-35.95%) }
+        #player { position:absolute; top:0; right:0; bottom:0; left:0; border:0 }
     </style>
 </head>
 <body>
-    <iframe id="player" allow="autoplay; fullscreen"></iframe>
-    <script>
-        const params = new URLSearchParams(window.location.hash.substr(1));
-        const player = document.getElementById('player');
-        player.setAttribute('src', `https://player.vimeo.com/video/${params.get('v')}?autoplay=1&muted=1#t=${params.get('t')}`);
-    </script>
+<div id="top">
+    <div id="wrapper">
+        <iframe id="player" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+</div>
+<script>
+    const params = new URLSearchParams(window.location.hash.substr(1));
+    const player = document.getElementById('player');
+    player.setAttribute('src', `https://player.vimeo.com/video/${params.get('v')}?title=0&byline=0&portrait=0&transparent=0&autoplay=1&muted=1#t=${params.get('t')}`);
+</script>
 </body>
 </html>
