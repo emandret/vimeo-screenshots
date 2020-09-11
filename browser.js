@@ -28,6 +28,14 @@ async function fetchVideoData(id) {
         process.exit();
     }
 
+    const id = parseInt(args[0]);
+    const interval = parseInt(args[1]);
+
+    if (interval < 1) {
+        console.warn('The time interval must be greater than zero!');
+        process.exit();
+    }
+
     try {
         const browser = await puppeteer.launch({
             headless: true,
@@ -35,8 +43,6 @@ async function fetchVideoData(id) {
             ignoreDefaultArgs: ['--disable-dev-shm-usage']
         })
 
-        const id = parseInt(args[0]);
-        const interval = parseInt(args[1]);
         const video = await fetchVideoData(id);
 
         // Current working directory
