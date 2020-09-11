@@ -48,7 +48,7 @@ async function fetchVideoData(id) {
             fs.mkdirSync(imgPath);
         }
 
-        for (let t = interval; t < video.duration; t += interval) {
+        for (let t = 0; t < video.duration;) {
             const page = await browser.newPage();
 
             // Set the viewport width and height
@@ -66,6 +66,7 @@ async function fetchVideoData(id) {
             // Compute delta time
             const diff = process.hrtime(start);
             t += (diff[0] + diff[1] * 1e-9);
+            t += interval;
 
             // Convert the number of seconds to hh:mm:ss
             const date = new Date(Math.round(t) * 1e3).toISOString().substr(11, 8).replace(/\:/g, '');
