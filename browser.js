@@ -18,6 +18,8 @@ async function fetchVideoData(id) {
     } catch (e) {
         console.warn(e);
     }
+
+    return {};
 }
 
 (async () => {
@@ -35,6 +37,8 @@ async function fetchVideoData(id) {
         console.warn('The time interval must be greater than zero!');
         process.exit();
     }
+
+    // TODO: Remove await expressions inside the for loop (https://eslint.org/docs/rules/no-await-in-loop)
 
     try {
         const browser = await puppeteer.launch({
@@ -59,6 +63,8 @@ async function fetchVideoData(id) {
 
             // Set the viewport width and height
             await page.setViewport({ width: video.width, height: video.height });
+
+            // TODO: Change the player file with the bundled Vimeo SDK to tweak the progress in milliseconds
 
             // Open the player
             await page.goto(`file://${cwd}/player.html#v=${id}&t=${Math.round(t)}`, { waitUntil: 'networkidle0', timeout: 0 });
