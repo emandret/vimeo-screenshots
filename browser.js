@@ -48,7 +48,7 @@ async function fetchVideoData(id) {
             fs.mkdirSync(imgPath);
         }
 
-        for (let t = 0; t < video.duration; t += interval) {
+        for (let t = interval; t < video.duration; t += interval) {
             const page = await browser.newPage();
 
             // Set the viewport width and height
@@ -67,8 +67,6 @@ async function fetchVideoData(id) {
             const diff = process.hrtime(start);
             t += (diff[0] + diff[1] * 1e-9);
 
-            console.log(`t: ${t}`);
-
             // Convert the number of seconds to hh:mm:ss
             const date = new Date(Math.ceil(t) * 1e3).toISOString().substr(11, 8).replace(/\:/g, '');
 
@@ -78,7 +76,6 @@ async function fetchVideoData(id) {
                     console.warn(e);
                 } else {
                     console.log(`Saved img_${date}.png!`);
-                    console.log('======================');
                 }
             });
 
